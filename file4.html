@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W3 schools javascript whereto</title>
+    <script>
+        function head_function(){document.getElementById("test").innerHTML="changing from head"}
+    </script>
+</head>
+<body>
+    <script>
+        function body_function(){document.getElementById("test2").innerHTML="changing from body"}
+    </script>
+    <h2>function in head</h2>
+    <p id="test">our test is in head</p>
+    <button type="button" onclick="head_function()">try it</button>
+    <h2>function in body</h2>
+    <p id="test2">our test is in body</p>
+    <button type="button" onclick="body_function()">try it</button>
+    <h2>function is stored in script file</h2>
+    <p id="test3">our test will be changed from script.js file</p>
+    <button type="button" onclick="script_function()">try it</button>
+    <script src="scripts.js"></script>
+</body>
+</html>
