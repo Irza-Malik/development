@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>exersice 3</title>
+</head>
+<body>
+    <h2>Question 1 of exercise 3</h2>
+    <input type="number" id="celsius" placeholder="Temprature...  ">
+    <p>°C</p>
+    <button onclick="C_to_F()">Calculate </button>
+    <p>°F: <span id="fahrenheit"></span></p>
+    <h2>Question 2</h2>
+    <p>world cups from 2022 to 2050</p>
+    <ul id="world_cup"></ul>
+    <h2>Question 3</h2>
+    <span><input type="number" name="G1" id="grade1" placeholder="Type grade 1...">  Grade 1</span><br>
+    <label></label><input type="number" name="G2" id="grade2" placeholder="Type grade 2...">  Grade 2</label><br>
+    <label><input type="number" name="ABS" id="absences" placeholder="Type number of absences">  Absences</label><br>
+    <button onclick="result()">Calculate</button>
+    <h3>result: <span id="result"></span></h3>
+    <script>
+        function C_to_F(){
+            let C=document.getElementById("celsius").value;
+            document.getElementById("fahrenheit").innerHTML = (9 * C / 5) + 32 
+        }
+        let list=document.getElementById("world_cup");
+        for(let year=2022;year<=2050;year+=4){
+            let li=document.createElement("li");
+            li.innerText=year;
+            list = list.appendChild(li);
+        }
+        function result(){
+            let grade1=parseFloat(document.getElementById("grade1").value);
+            let grade2=parseFloat(document.getElementById("grade2").value);
+            let absences=document.getElementById("absences").value;
+            let totalclass=20;
+            let min_attendence=0.7*totalclass;
+            let min_grade=6.5;
+            let average=(grade1+grade2)/2;
+            if (average >= min_grade && absences <= min_attendence) {
+                resultText = "Approved ";
+            } else {
+                resultText = "Failed  (";
+
+                if (average < min_grade && absences > min_attendence) {
+                    resultText += "Insufficient Grade & Excess Absences";
+                } else if (average < min_grade) {
+                    resultText += "Insufficient Grade";
+                } else {
+                    resultText += "Excess Absences";
+                }
+                
+                resultText += ")";
+            }
+
+            document.getElementById("result").innerText = resultText;
+        }
+    </script>
+</body>
+</html>
