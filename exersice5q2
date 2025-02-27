@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Ratings</title>
+</head>
+<body>
+
+    <h1>Course Ratings</h1>
+    <pre id="output"></pre>
+
+    <script>
+        function processCourses(jsonData) {
+            try {
+                let courses = JSON.parse(jsonData);
+                courses.forEach(course => {
+                    let reviews = course.reviews;
+
+                    if (!Array.isArray(reviews)) {
+                        throw new Error(`Invalid data format for course: ${course.title}`);
+                    }
+
+                    if (reviews.length === 0) {
+                        course.averageRating = "No reviews";
+                    } else if (reviews.length < 5) {
+                        course.averageRating = "Not enough reviews yet.";
+                    } else {
+                        let sum = reviews.reduce((acc, rating) => acc + rating, 0);
+                        let avg = sum / reviews.length;
+                        course.averageRating = avg.toFixed(1); // Round to 1 decimal place
+                    }
+                });
+
+                // Convert the updated object back to a JSON string with formatting
+                return JSON.stringify(courses, null, 2);
+
+            } catch (error) {
+                console.error("Error processing courses:", error.message);
+                return null;
+            }
+        }
+
+        // Given JSON data
+        var courses = '[{"title": "PHP","reviews": []},' +
+                      '{"title": "Javascript","reviews": [5,5,4.5,4,5,5,5,4.5]},' +
+                      '{"title": "Python","reviews": [5,5,4,4,5,3,5,4,4,5]},' +
+                      '{"title": "Machine Learning","reviews": [5,5,4.5]}]';
+
+        // Process courses and display results
+        let result = processCourses(courses);
+        document.getElementById("output").textContent = result;
+
+    </script>
+
+</body>
+</html>

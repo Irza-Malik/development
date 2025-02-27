@@ -3,14 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>variables </title>
+    <title>Stopwatch</title>
 </head>
 <body>
-    <h2 id="hi"></h2>
+
+    <h2>Stopwatch</h2>
+    <div id="display">00:00:00 000</div>
+    <button onclick="startStopwatch()">Start</button>
+    <button onclick="pauseStopwatch()">Pause</button>
+    <button onclick="resetStopwatch()">Reset</button>
+
     <script>
-    var user_name="irza";
-    console.log(user_name);
-    document.getElementById("hi").innerHTML = "hello "+ user_name +"!";
-    </script> 
+        let startTime, updatedTime, difference;
+        let running = false;
+        let interval;
+        let savedTime = 0;
+
+        function startStopwatch() {
+            if (!running) {
+                startTime = new Date().getTime() - savedTime;
+                interval = setInterval(updateTime, 10);
+                running = true;
+            }
+        }
+
+        function pauseStopwatch() {
+            if (running) {
+                clearInterval(interval);
+                savedTime = new Date().getTime() - startTime;
+                running = false;
+            }
+        }
+
+        function resetStopwatch() {
+            clearInterval(interval);
+            running = false;
+            savedTime = 0;
+            document.getElementById("display").textContent = "00:00:00 000";
+        }
+
+        function updateTime() {
+            updatedTime = new Date().getTime();
+            difference = updatedTime - startTime;
+
+            let milliseconds = difference % 1000;
+            let seconds = Math.floor((difference / 1000) % 60);
+            let minutes = Math.floor((difference / (1000 * 60)) % 60);
+            let hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+
+            document.getElementById("display").textContent =
+                (hours < 10 ? "0" : "") + hours + ":" +
+                (minutes < 10 ? "0" : "") + minutes + ":" +
+                (seconds < 10 ? "0" : "") + seconds + " " +
+                (milliseconds < 100 ? "0" : "") + (milliseconds < 10 ? "0" : "") + milliseconds;
+        }
+    </script>
+
 </body>
 </html>
