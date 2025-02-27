@@ -56,7 +56,9 @@
             // Call function to fetch and populate countries
             fetchCountries();
         });
-    </script>
+    </script> 
+
+    
 
 </body>
 </html>
