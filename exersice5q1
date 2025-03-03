@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Selector</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <label for="countries">Select a Country:</label>
+    <select id="countries">
+        <option value="">Loading...</option>
+    </select>
+
+    <script>
+        $(document).ready(function () {
+            const apiUrl = "https://restcountries.com/v2/all"; // Updated API URL
+
+            // Fetch countries and populate the select box
+            function fetchCountries() {
+                $.ajax({
+                    url: apiUrl,
+                    method: "GET",
+                    success: function (data) {
+                        populateCountries(data);
+                    },
+                    error: function () {
+                        alert("Failed to load countries!");
+                    }
+                });
+            }
+
+            // Populate the <select> with country options
+            function populateCountries(countries) {
+                let select = $("#countries");
+                select.empty().append('<option value="">Select a country</option>');
+
+                countries.forEach(country => {
+                    select.append(`<option value="${country.name}">${country.name}</option>`);
+                });
+
+                // Restore selected country from localStorage
+                let savedCountry = localStorage.getItem("selectedCountry");
+                if (savedCountry) {
+                    select.val(savedCountry);
+                }
+            }
+
+            // Save selected country to localStorage
+            $("#countries").on("change", function () {
+                let selectedCountry = $(this).val();
+                localStorage.setItem("selectedCountry", selectedCountry);
+            });
+
+            // Call function to fetch and populate countries
+            fetchCountries();
+        });
+    </script> 
+
+    
+
+</body>
+</html>
